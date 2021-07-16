@@ -280,6 +280,9 @@ func getStackSelector(selector *v1.ResourceSelector) types.Selector {
 
 func (sched *Scheduler) addPodToSchedulingQueue(obj interface{}) {
 	pod, ok := obj.(*v1.Pod)
+	t := time.Now()
+
+	klog.Infof("updatePodToSchedulingQueue : %v at the moment %s", pod, t.Format("2006-01-02 15:04:05.000000"))
 	if !ok {
 		klog.Errorf("cannot convert to *v1.Pod: %v", obj)
 		return
@@ -287,7 +290,7 @@ func (sched *Scheduler) addPodToSchedulingQueue(obj interface{}) {
 
 	// add pod resource to a stack
 	stack := getStackFromPod(pod)
-	stack.CreateTime = time.Now().UnixNano()
+	stack.CreateTime = t.UnixNano()
 
 	if err := sched.StackQueue.Add(stack); err != nil {
 		utilruntime.HandleError(fmt.Errorf("unable to queue %T: %v", obj, err))

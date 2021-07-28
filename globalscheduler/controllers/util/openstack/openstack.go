@@ -102,6 +102,8 @@ func ServerCreate(host string, authToken string, manifest *v1.PodSpec) (string, 
 	req.Header.Set("X-Auth-Token", authToken)
 	client := &http.Client{}
 	resp, err := client.Do(req)
+	klog.Warningf("---request: %+v", req)
+	klog.Warningf("---requestBody: %+v", string(finalData))
 	if err != nil {
 		klog.V(3).Infof("HTTP Post Instance Request Failed: %v", err)
 		return "", err
@@ -109,6 +111,7 @@ func ServerCreate(host string, authToken string, manifest *v1.PodSpec) (string, 
 	defer resp.Body.Close()
 
 	body, _ := ioutil.ReadAll(resp.Body)
+	klog.Warningf("---response: %+v", string(body))
 	var instanceResponse map[string]interface{}
 	if err := json.Unmarshal(body, &instanceResponse); err != nil {
 		klog.V(3).Infof("Instance Create Response Unmarshal Failed")

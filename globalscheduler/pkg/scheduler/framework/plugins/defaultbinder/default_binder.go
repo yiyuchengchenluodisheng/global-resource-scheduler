@@ -101,7 +101,7 @@ func (b DefaultBinder) Bind(ctx context.Context, state *interfaces.CycleState, s
 		//put them all to resInfo
 		resInfo.CpuAndMem[flv.OsExtraSpecs.ResourceType] = reqRes
 	}
-	b.handle.Cache().UpdateSiteWithResInfo(siteID, resInfo)
+	//b.handle.Cache().UpdateSiteWithResInfo(siteID, resInfo)
 	regionFlavors, err := b.handle.SnapshotSharedLister().SiteCacheInfos().GetFlavors()
 	if err != nil {
 		klog.Errorf("Getting region's flavor failed: %s", err)
@@ -110,7 +110,7 @@ func (b DefaultBinder) Bind(ctx context.Context, state *interfaces.CycleState, s
 	if regionFlavors == nil || err != nil {
 		regionFlavors = map[string]*typed.RegionFlavor{}
 	}
-	siteCacheInfo.DeductSiteResInfo(resInfo, regionFlavors)
+	//siteCacheInfo.DeductSiteResInfo(resInfo, regionFlavors)
 	klog.Infof("Resource state after deduction: %v", siteCacheInfo)
 	return nil
 }

@@ -270,7 +270,8 @@ func (sched *Scheduler) scheduleOne() bool {
 	if shutdown != nil {
 		return false
 	}
-	klog.Infof("1. Stack: %v, stack selector: %v", stack, stack.Selector)
+	klog.Infof("1. Stack: %v, resource: %v, stack selector: %v", stack, &stack.Resources[0], stack.Selector)
+	//klog.Infof("1. Stack: %v, stack selector: %v", stack, stack.Selector)
 	allocation, err := sched.generateAllocationFromStack(stack)
 	klog.Infof("2. Allocation: %v, allocation selector: %v", allocation, allocation.Selector)
 	if err != nil {
@@ -497,7 +498,7 @@ func (sched *Scheduler) selectHost(siteScoreList interfaces.SiteScoreList) (stri
 // We expect this to run asynchronously, so we handle binding metrics internally.
 func (sched *Scheduler) bind(ctx context.Context, stack *types.Stack, targetSiteID string,
 	state *interfaces.CycleState) (err error) {
-	bindStatus := sched.SchedFrame.RunBindPlugins(ctx, state, stack,
+        bindStatus := sched.SchedFrame.RunBindPlugins(ctx, state, stack,
 		sched.siteCacheInfoSnapshot.SiteCacheInfoMap[targetSiteID])
 	if bindStatus.IsSuccess() {
 		return nil

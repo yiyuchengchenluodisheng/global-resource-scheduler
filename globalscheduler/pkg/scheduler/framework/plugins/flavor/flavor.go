@@ -132,6 +132,7 @@ func GetPreFilterState(cycleState *interfaces.CycleState) (*FlavorAggregates, er
 // PreFilter invoked at the prefilter extension point.
 func (f *Flavor) PreFilter(ctx context.Context, cycleState *interfaces.CycleState,
 	stack *types.Stack) *interfaces.Status {
+	klog.Infof("enter flavor prefilter, state: %v", cycleState)
 	cycleState.Lock()
 	defer cycleState.Unlock()
 	cycleState.Write(preFilterStateKey, calculateFlavorAggregate(stack))
@@ -299,6 +300,7 @@ func isSpotFlavorMatch(spotFlavorMap map[string]*spotHours, siteCacheInfo *sitec
 
 func (f *Flavor) Filter(ctx context.Context, cycleState *interfaces.CycleState, stack *types.Stack,
 	siteCacheInfo *sitecacheinfo.SiteCacheInfo) *interfaces.Status {
+	klog.Infof("enter flavor filter, state: %v", cycleState)
 	s, err := GetPreFilterState(cycleState)
 	if err != nil {
 		return interfaces.NewStatus(interfaces.Error, err.Error())
@@ -324,6 +326,7 @@ func (f *Flavor) Filter(ctx context.Context, cycleState *interfaces.CycleState, 
 // Score invoked at the score extension point.
 func (pl *Flavor) Score(ctx context.Context, state *interfaces.CycleState, stack *types.Stack,
 	siteCacheInfo *sitecacheinfo.SiteCacheInfo) (int64, *interfaces.Status) {
+	klog.Infof("enter flavor score, state: %v", state)
 	s, err := GetPreFilterState(state)
 	if err != nil {
 		return 0, interfaces.NewStatus(interfaces.Error, err.Error())

@@ -98,6 +98,7 @@ func getAntiAffinityScore(stack *types.Stack, siteCacheInfo *sitecacheinfo.SiteC
 // Score invoked at the score extension point.
 func (pl *StackAffinity) Score(ctx context.Context, state *interfaces.CycleState,
 	stack *types.Stack, siteCacheInfo *sitecacheinfo.SiteCacheInfo) (int64, *interfaces.Status) {
+	klog.Infof("enter stackAffinity score, state: %v", state)
 	site := siteCacheInfo.GetSite()
 	if site == nil {
 		return 0, interfaces.NewStatus(interfaces.Error, fmt.Sprintf("site not found"))

@@ -130,6 +130,7 @@ func computeStackResourceRequest(stack *types.Stack) *SiteResFilterState {
 // PreFilter invoked at the prefilter extension point.
 func (f *Fit) PreFilter(ctx context.Context, cycleState *interfaces.CycleState,
 	stack *types.Stack) *interfaces.Status {
+	klog.Infof("enter fit prefilter, state: %v", cycleState)
 	cycleState.Lock()
 	defer cycleState.Unlock()
 	cycleState.Write(preFilterStateKey, computeStackResourceRequest(stack))
@@ -157,6 +158,7 @@ func GetPreFilterState(cycleState *interfaces.CycleState) (*SiteResFilterState, 
 // It returns a list of insufficient resources, if empty, then the site has all the resources requested by the pod.
 func (f *Fit) Filter(ctx context.Context, cycleState *interfaces.CycleState, stack *types.Stack,
 	siteCacheInfo *schedulersitecacheinfo.SiteCacheInfo) *interfaces.Status {
+	klog.Infof("enter fit filter, state: %v", cycleState)
 	s, err := GetPreFilterState(cycleState)
 	if err != nil {
 		return interfaces.NewStatus(interfaces.Error, err.Error())

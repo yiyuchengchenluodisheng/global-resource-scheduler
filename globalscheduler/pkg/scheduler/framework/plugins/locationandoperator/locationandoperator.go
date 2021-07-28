@@ -101,7 +101,7 @@ func (pl *LocationAndOperator) locationEqual(stack *types.Stack, siteCacheInfo *
 // Filter invoked at the filter extension point.
 func (pl *LocationAndOperator) Filter(ctx context.Context, cycleState *interfaces.CycleState, stack *types.Stack,
 	siteCacheInfo *sitecacheinfo.SiteCacheInfo) *interfaces.Status {
-
+	klog.Infof("enter location&operator filter, state: %v", cycleState)
 	if ok, status := pl.locationEqual(stack, siteCacheInfo); !ok {
 		return status
 	}
@@ -116,6 +116,7 @@ func (pl *LocationAndOperator) Filter(ctx context.Context, cycleState *interface
 //Strategy run strategy
 func (pl *LocationAndOperator) Strategy(ctx context.Context, state *interfaces.CycleState,
 	allocations *types.Allocation, siteScoreList interfaces.SiteScoreList) (interfaces.SiteScoreList, *interfaces.Status) {
+	klog.Infof("enter location&operator strategy, state: %v", state)
 	var count = allocations.Replicas
 	var currentCount = count
 	var siteCount interfaces.SiteScoreList

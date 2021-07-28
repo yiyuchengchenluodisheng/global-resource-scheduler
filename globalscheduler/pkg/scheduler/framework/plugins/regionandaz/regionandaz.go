@@ -71,7 +71,7 @@ func (pl *RegionAndAz) regionEqual(region types.CloudRegion, siteCacheInfo *site
 // Filter invoked at the filter extension point.
 func (pl *RegionAndAz) Filter(ctx context.Context, cycleState *interfaces.CycleState,
 	stack *types.Stack, siteCacheInfo *sitecacheinfo.SiteCacheInfo) *interfaces.Status {
-
+	klog.Infof("enter region&az filter, state: %v", cycleState)
 	if len(stack.Selector.Regions) <= 0 {
 		return nil
 	}
@@ -94,7 +94,7 @@ func (pl *RegionAndAz) Filter(ctx context.Context, cycleState *interfaces.CycleS
 //Strategy run strategy
 func (pl *RegionAndAz) Strategy(ctx context.Context, state *interfaces.CycleState,
 	allocations *types.Allocation, siteScoreList interfaces.SiteScoreList) (interfaces.SiteScoreList, *interfaces.Status) {
-
+	klog.Infof("enter RegionAndAz strategy, state: %v", state)
 	if allocations.Selector.Strategy.RegionStrategy != constants.StrategyRegionAlone {
 		return siteScoreList, nil
 	}

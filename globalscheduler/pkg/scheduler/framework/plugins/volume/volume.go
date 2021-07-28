@@ -63,7 +63,7 @@ func calculateStackStorageRequest(stack *types.Stack) map[string]float64 {
 // Filter invoked at the filter extension point.
 func (pl *Volume) Filter(ctx context.Context, cycleState *interfaces.CycleState, stack *types.Stack,
 	siteCacheInfo *sitecacheinfo.SiteCacheInfo) *interfaces.Status {
-
+	klog.Infof("enter volume filter, state: %v", cycleState)
 	var maxCount float64 = math.MaxFloat64
 	stackStorageRequest := calculateStackStorageRequest(stack)
 
@@ -103,6 +103,7 @@ func (pl *Volume) Filter(ctx context.Context, cycleState *interfaces.CycleState,
 // Score invoked at the score extension point.
 func (pl *Volume) Score(ctx context.Context, state *interfaces.CycleState, stack *types.Stack,
 	siteCacheInfo *sitecacheinfo.SiteCacheInfo) (int64, *interfaces.Status) {
+	klog.Infof("enter volume score, state: %v", state)
 	var requestedTotalSize float64 = 0
 	var allocatableTotalSize float64 = 0
 

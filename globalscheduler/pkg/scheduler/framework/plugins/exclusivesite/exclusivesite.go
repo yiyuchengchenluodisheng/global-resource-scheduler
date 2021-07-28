@@ -45,6 +45,7 @@ func (pl *ExclusiveSite) Name() string {
 // Filter invoked at the filter extension point.
 func (pl *ExclusiveSite) Filter(ctx context.Context, cycleState *interfaces.CycleState, stack *types.Stack,
 	siteCacheInfo *sitecacheinfo.SiteCacheInfo) *interfaces.Status {
+	klog.Infof("enter exclusiveSite filter, state: %v", cycleState)
 	domainID := utils.GetStrFromCtx(ctx, constants.ContextDomainID)
 
 	siteAttrs := siteCacheInfo.GetSite().SiteAttribute

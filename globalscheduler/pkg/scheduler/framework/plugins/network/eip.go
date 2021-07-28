@@ -18,6 +18,7 @@ package network
 
 import (
 	"context"
+	"k8s.io/klog"
 	"k8s.io/kubernetes/globalscheduler/pkg/scheduler/framework/interfaces"
 	"k8s.io/kubernetes/globalscheduler/pkg/scheduler/sitecacheinfo"
 	"k8s.io/kubernetes/globalscheduler/pkg/scheduler/types"
@@ -38,6 +39,7 @@ func (pl *EipAvailability) Name() string {
 
 // Filter invoked at the filter extension point.
 func (pl *EipAvailability) Filter(ctx context.Context, cycleState *interfaces.CycleState, stack *types.Stack, siteCacheInfo *sitecacheinfo.SiteCacheInfo) *interfaces.Status {
+	klog.Infof("enter eip filter, state: %v", cycleState)
 	var eipCount = 0
 	for _, server := range stack.Resources {
 		if server.NeedEip {

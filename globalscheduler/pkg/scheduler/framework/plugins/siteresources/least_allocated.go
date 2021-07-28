@@ -18,6 +18,7 @@ package siteresources
 
 import (
 	"context"
+	"k8s.io/klog"
 	"k8s.io/kubernetes/globalscheduler/pkg/scheduler/sitecacheinfo"
 
 	"k8s.io/kubernetes/globalscheduler/pkg/scheduler/framework/interfaces"
@@ -50,6 +51,7 @@ func (la *LeastAllocated) Score(ctx context.Context, state *interfaces.CycleStat
 	//
 	// Details:
 	// (cpu((capacity-sum(requested))/capacity) + memory((capacity-sum(requested))/capacity))/2*weight
+	klog.Infof("enter least_allocate score, state: %v", state)
 	return la.score(stack, siteCacheInfo)
 }
 

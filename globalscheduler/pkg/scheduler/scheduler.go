@@ -270,7 +270,7 @@ func (sched *Scheduler) scheduleOne() bool {
 	if shutdown != nil {
 		return false
 	}
-	klog.Infof("1. Stack: %v, resource: %v, stack selector: %v", stack, &stack.Resources[0], stack.Selector)
+	klog.Infof("1. Stack: %v,    resource: %v,   stack selector: %v", stack, *stack.Resources[0], stack.Selector)
 	//klog.Infof("1. Stack: %v, stack selector: %v", stack, stack.Selector)
 	allocation, err := sched.generateAllocationFromStack(stack)
 	klog.Infof("2. Allocation: %v, allocation selector: %v", allocation, allocation.Selector)
